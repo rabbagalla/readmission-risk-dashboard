@@ -5,8 +5,11 @@ import shap
 import matplotlib.pyplot as plt
 
 # Load model
-model = xgb.XGBClassifier()
-model.load_model("xgb_model.json")
+import pickle
+
+# Load the XGBClassifier object
+with open("xgb_model.pkl", "rb") as f:
+    model = pickle.load(f)
 
 st.set_page_config(page_title="Readmission Risk Predictor", layout="wide")
 st.title("🏥 Readmission Risk Dashboard")
