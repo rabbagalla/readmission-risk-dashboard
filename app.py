@@ -52,3 +52,19 @@ if uploaded_file is not None:
 
     except Exception as e:
         st.error(f"❌ Error processing file: {e}")
+        import shap
+import xgboost as xgb
+
+# SHAP initialization (only run once)
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(input_df)
+
+# Display top features for the first prediction
+st.subheader("🔍 Feature Explanation for First Patient")
+shap.initjs()
+shap_html = shap.plots._force.AdditiveForceVisualizer(
+    explainer.expected_value, shap_values[0, :], input_df.iloc[0, :]
+).html()
+
+st.components.v1.html(shap_html, height=300)
+
