@@ -10,11 +10,11 @@ from preprocessing import preprocess_input, clean_column_names
 model = joblib.load("xgboost_readmission_model.pkl")
 feature_names = joblib.load("model_features.pkl")
 
-# UI Header
+# Streamlit UI
 st.title("🏥 30-Day Hospital Readmission Predictor")
 st.markdown("Upload a CSV file to predict the 30-day readmission risk for each patient.")
 
-# File uploader
+# File upload
 uploaded_file = st.file_uploader("📤 Upload Patient CSV File", type="csv")
 
 if uploaded_file is not None:
@@ -57,6 +57,11 @@ if uploaded_file is not None:
         # SHAP Explainability for first patient
         st.subheader("🔎 SHAP Explanation: Patient 0")
         st.markdown("Below is the feature contribution breakdown for the first patient.")
+
+        # Clean column names again (required for SHAP)
+        input_df.columns = clean_column_names(input_df.columns)
+
+        # SHAP force plot
         explainer = shap.TreeExplainer(model)
         shap_values = explainer.shap_values(input_df)
 
@@ -64,7 +69,6 @@ if uploaded_file is not None:
         force_plot = shap.plots.force(
             explainer.expected_value, shap_values[0], input_df.iloc[0], matplotlib=False
         )
-
         components.html(shap.getjs() + force_plot.html(), height=300)
 
     except Exception as e:
