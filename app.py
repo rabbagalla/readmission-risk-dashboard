@@ -1,14 +1,12 @@
-# app.py
-
 import streamlit as st
 import pandas as pd
 import joblib
 from preprocessing import preprocess_input, clean_column_names
 
 # Load model
-# Load feature names to match model input
-feature_names = joblib.load("model_features.pkl")
-input_df = input_df.reindex(columns=feature_names, fill_value=0)
+model = joblib.load("xgboost_readmission_model.pkl")
+feature_names = joblib.load("model_features.pkl")  # ← Keep this outside
+
 
 
 st.title("🏥 30-Day Readmission Predictor")
