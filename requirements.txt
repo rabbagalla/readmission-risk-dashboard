@@ -3,3 +3,4 @@ pandas
 xgboost
 shap
 matplotlib
+joblib
