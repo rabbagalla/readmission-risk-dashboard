@@ -17,3 +17,20 @@ This project is a real-time predictive dashboard built with **Streamlit**, using
 
 ## 📁 File Structure
 
+📦 my_readmission_app/
+├── app.py
+├── preprocessing.py
+├── model_features.pkl
+├── xgboost_readmission_model.pkl
+├── requirements.txt
+└── README.md
+
+## 📥 Sample Input Format
+
+Upload a CSV file with columns like:
+
+```csv
+age,gender,race,diag_1,diag_2,diag_3,time_in_hospital,num_lab_procedures,...
+
+🤝 Acknowledgements
+Dataset: UCI Diabetes 130-US hospitals
