@@ -18,7 +18,7 @@ This project is a **real-time Streamlit dashboard** that predicts the risk of **
 
 ## 🚀 Live Demo
 
-👉 [**Click here to try the live app**](https://your-streamlit-app-link)
+👉 [**Click here to try the live app**](https://readmission-risk-dashboard-tm4e6goav8fapdis9hpzje.streamlit.app/#shap-explanation-patient-0)
 
 > Upload a CSV with patient data and get instant readmission predictions with SHAP explanations.
 
@@ -102,8 +102,3 @@ Dataset: UCI Machine Learning Repository
 SHAP: Lundberg & Lee (NIPS 2017)
 
 Streamlit Community
-
-yaml
-Copy
-Edit
-
