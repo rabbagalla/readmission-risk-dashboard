@@ -31,14 +31,17 @@ if uploaded_file is not None:
         preds = (probs >= 0.3).astype(int)
 
         # Results
-        raw_df["Readmission_Risk_Prob"] = probs.round(3)
-        raw_df["Readmission_Predicted"] = ["Yes" if p == 1 else "No" for p in preds]
+output_df = raw_df.copy()
+output_df["Readmission_Risk_Prob"] = probs.round(3)
+output_df["Readmission_Predicted"] = ["Yes" if p == 1 else "No" for p in preds]
 
-        st.subheader("📋 Prediction Results")
-        st.dataframe(raw_df)
+st.subheader("📋 Prediction Results")
+st.markdown("🔍 **Note:** Patients predicted as `Yes` for readmission have a probability ≥ 0.30.")
 
-        csv = raw_df.to_csv(index=False).encode("utf-8")
-        st.download_button("📥 Download Results", csv, "readmission_predictions.csv", "text/csv")
+# Reorder columns to show predictions first
+cols = ["Readmission_Predicted", "Readmission_Risk_Prob"] + raw_df.columns.tolist()
+st.dataframe(output_df[cols])
 
-    except Exception as e:
-        st.error(f"Error processing file: {e}")
+# Download button
+csv = output_df.to_csv(index=False).encode("utf-8")
+st.download_button("📥 Download Results", csv, "readmission_predictions.csv", "text/csv")
