@@ -6,9 +6,11 @@ import matplotlib.pyplot as plt
 
 import xgboost as xgb
 
-# Load Booster model and wrap it in XGBClassifier
-booster = xgb.Booster()
-booster.load_model("xgb_booster_model.json")
+import joblib
+
+# Load full XGBClassifier model
+model = joblib.load("xgb_model.joblib")
+
 
 model = xgb.XGBClassifier()
 model._Booster = booster
