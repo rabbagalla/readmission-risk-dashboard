@@ -4,17 +4,10 @@ import xgboost as xgb
 import shap
 import matplotlib.pyplot as plt
 
-import xgboost as xgb
-
 import joblib
 
-# Load full XGBClassifier model
+# Load the full XGBClassifier model
 model = joblib.load("xgb_model.joblib")
-
-
-model = xgb.XGBClassifier()
-model._Booster = booster
-model._le = None  # avoid label encoder issues
 
 st.set_page_config(page_title="Readmission Risk Predictor", layout="wide")
 st.title("🏥 Readmission Risk Dashboard")
