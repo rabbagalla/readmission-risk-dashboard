@@ -4,12 +4,15 @@ import xgboost as xgb
 import shap
 import matplotlib.pyplot as plt
 
-# Load model
-import pickle
+import xgboost as xgb
 
-# Load the XGBClassifier object
-with open("xgb_model.pkl", "rb") as f:
-    model = pickle.load(f)
+# Load Booster model and wrap it in XGBClassifier
+booster = xgb.Booster()
+booster.load_model("xgb_booster_model.json")
+
+model = xgb.XGBClassifier()
+model._Booster = booster
+model._le = None  # avoid label encoder issues
 
 st.set_page_config(page_title="Readmission Risk Predictor", layout="wide")
 st.title("🏥 Readmission Risk Dashboard")
