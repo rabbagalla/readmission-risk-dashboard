@@ -14,7 +14,7 @@ feature_names = joblib.load("model_features.pkl")
 st.title("🏥 30-Day Hospital Readmission Predictor")
 st.markdown("Upload a CSV file to predict the 30-day readmission risk for each patient.")
 
-# File upload
+# File uploader
 uploaded_file = st.file_uploader("📤 Upload Patient CSV File", type="csv")
 
 if uploaded_file is not None:
@@ -54,20 +54,26 @@ if uploaded_file is not None:
         csv = output_df.to_csv(index=False).encode("utf-8")
         st.download_button("📥 Download Results", csv, "readmission_predictions.csv", "text/csv")
 
-        # SHAP Explainability for first patient
-        st.subheader("🔎 SHAP Explanation: Patient 0")
-        st.markdown("Below is the feature contribution breakdown for the first patient.")
+        # SHAP Explanation for selected patient
+        st.subheader("🔎 SHAP Explanation for Selected Patient")
 
-        # Clean column names again (required for SHAP)
+        # Clean column names again for SHAP safety
         input_df.columns = clean_column_names(input_df.columns)
 
-        # SHAP force plot
+        # Build SHAP explainer and values
         explainer = shap.TreeExplainer(model)
         shap_values = explainer.shap_values(input_df)
 
+        # Patient selection dropdown
+        patient_index = st.selectbox("Select patient index", range(len(input_df)), index=0)
+
+        # Force plot for selected patient
         shap.initjs()
         force_plot = shap.plots.force(
-            explainer.expected_value, shap_values[0], input_df.iloc[0], matplotlib=False
+            explainer.expected_value,
+            shap_values[patient_index],
+            input_df.iloc[patient_index],
+            matplotlib=False
         )
         components.html(shap.getjs() + force_plot.html(), height=300)
 
